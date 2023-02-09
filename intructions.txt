@@ -1,1 +1,5 @@
-salut
+5 5
+1 2 N
+G A D A
+3 0 S
+D D D G A
