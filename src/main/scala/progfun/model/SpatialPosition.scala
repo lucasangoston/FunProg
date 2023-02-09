@@ -3,7 +3,7 @@ package progfun.model
 import progfun.model.Movement.{MoveForward, TurnLeft, TurnRight}
 import progfun.model.OrientationReal.{East, North, South, West}
 
-case class SpatialPosition(pos: Position, cardinalPoint: OrientationReal.Value) {
+case class SpatialPosition(position: Position, cardinalPoint: OrientationReal.Value) {
 
   val orientationMapping =
     Map(
@@ -24,18 +24,18 @@ case class SpatialPosition(pos: Position, cardinalPoint: OrientationReal.Value) 
                   TurnRight -> North)
   )
 
-  def calculateNextPosition(movement: Movement.Value): SpatialPosition = {
+  def calculateNextSpatialPosition(movement: Movement.Value): SpatialPosition = {
     val finalOrientation = orientationMapping(cardinalPoint)(movement)
     val finalPos = movement match {
       case MoveForward => moveForward(finalOrientation)
-      case _ => pos
+      case _ => position
     }
     SpatialPosition(finalPos, finalOrientation)
   }
 
   def moveForward(finalDirection: OrientationReal.Value): Position = {
-    val x = pos.x
-    val y = pos.y
+    val x = position.x
+    val y = position.y
     finalDirection match {
       case North => Position(x, y + 1)
       case South => Position(x, y - 1)
@@ -44,7 +44,7 @@ case class SpatialPosition(pos: Position, cardinalPoint: OrientationReal.Value) 
     }
   }
 
-  override def toString = {
-    this.pos.x + " " + this.pos.y + " " + this.cardinalPoint
-  }
+//  override def toString = {
+//    this.position.x + " " + this.position.y + " " + this.cardinalPoint.toString
+//  }
 }

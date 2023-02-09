@@ -19,13 +19,15 @@ object Main extends App {
   println(initPos.x)
   println(initPos.y)
 }
-
 case class Manager(lawnUpperRightCorner: Position, mowersDirectives: List[(SpatialPosition, List[Movement.Value])]) {
+
   val lawn = Lawn(lawnUpperRightCorner.x, lawnUpperRightCorner.y)
-  def finalPrint() { //print la position final des lawnMower
+  def finalPrint(): Unit =  { //print la position final des lawnMower
     mowersDirectives.foreach { m =>
       val lawnMower = LawnMower(m._1, lawn)
       val endPosition = lawnMower.doMovements(m._2)
+      println(lawn)
+      println(m._1)
       println(endPosition)
     }
   }
