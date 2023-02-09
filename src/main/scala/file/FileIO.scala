@@ -1,6 +1,6 @@
 package file
 import better.files._
-import model.Position
+import model.{OrientationReal, Position, SpatialPosition}
 
 class FileIO {
 
@@ -10,11 +10,11 @@ class FileIO {
     f.lines.toList
   }
 
-  // je te renvois un truc de la forme : List((N,Position(1,2),List(G, A, D, A)), (S,Position(3,0),List(D, D, D, G, A)))
-  def parseFile(fileLines: List[String]): List[(Char, Position, List[Char])] = {
+  def parseFile(fileLines: List[String]): List[(SpatialPosition, List[Char])] = {
     val instructions = fileLines.grouped(2).map {
-      case Seq(position, movement) => val Array(x, y, direction) = position.split(" ")
-        (direction.head, Position(x.toInt, y.toInt), movement.filter(_ != ' ').toList)
+      case Seq(position, movement) =>
+        val Array(x, y, direction) = position.split(" ")
+        (SpatialPosition(Position(x.toInt, y.toInt), OrientationReal.nameToOrientation(direction.head)), movement.filter(_ != ' ').toList)
     }.toList
     instructions
   }

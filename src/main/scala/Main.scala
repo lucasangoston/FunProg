@@ -16,7 +16,7 @@ object Main extends App {
   val lawn = Lawn(x, y)
 
 
-  println(map)
+  println(lawn)
   println(file.parseFile(instructionsLawnMower))
 
 }
