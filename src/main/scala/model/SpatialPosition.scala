@@ -23,7 +23,7 @@ case class SpatialPosition(
     val finalOrientation = orientationMapping(cardinalPoint)(movement)
     movement match {
       case MoveForward => moveForward(finalOrientation)
-      case _           => SpatialPosition(position, cardinalPoint)
+      case _           => SpatialPosition(position, finalOrientation)
     }
   }
 
