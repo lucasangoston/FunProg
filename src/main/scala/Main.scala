@@ -10,5 +10,5 @@ object Main extends App {
   val Array(x, y) = map.split(" ").map(_.toInt)
 
   val manager = Manager(Position(x, y), file.parseFile(instructionsLawnMower))
-  manager.finalPrint()
+  manager.execute()
 }

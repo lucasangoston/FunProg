@@ -22,7 +22,6 @@ case class LawnMower(initialSpatialPosition: SpatialPosition, lawn: Lawn) {
         val nextPos = SpatialPosition(calculatedNextPos.position, calculatedNextPos.cardinalPoint)
         move(nextPos, movements.drop(1))
       } else {
-        println("ELSE")
         move(pos, movements.drop(1))
       }
     }

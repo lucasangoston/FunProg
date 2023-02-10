@@ -6,7 +6,7 @@ class FileIO {
 
   def readInput(): List[String] = {
     val f: File = File(
-      "C:\\Users\\alexp\\Documents\\PROJETSPERSO\\FunProg\\intructions.txt"
+      "intructions.txt"
     )
 
     f.lines.toList
