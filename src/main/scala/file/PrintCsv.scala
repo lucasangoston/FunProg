@@ -6,7 +6,7 @@ trait CsvConverter[T] {
   def toCsv(t: T): Unit
 }
 
-class PrintOut {
+class PrintCsv {
 
   implicit val positionCsvConverter = new CsvConverter[Position] {
     def toCsv(pos: Position): Unit = {

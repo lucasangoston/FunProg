@@ -1,8 +1,9 @@
-import file.FileIO
+import file.{FileIO, PrintJson}
 import model.Position
 
 object Main extends App {
   def file: FileIO = new FileIO()
+  def json: PrintJson = new PrintJson()
   val instructions = file.readInput()
 
   val instructionsLawnMower = instructions.drop(1)
@@ -11,4 +12,6 @@ object Main extends App {
 
   val manager = Manager(Position(x, y), file.parseFile(instructionsLawnMower))
   manager.execute()
+
+
 }

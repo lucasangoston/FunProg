@@ -1,4 +1,5 @@
-import file.PrintOut
+import Main.json
+import file.{PrintCsv}
 import model.{Lawn, LawnMower, LawnMowerResult, Movement, Position, SpatialPosition}
 
 case class Manager(lawnUpperRightCorner: Position, mowersDirectives: List[(SpatialPosition, List[Movement.Value])]) {
@@ -11,7 +12,12 @@ case class Manager(lawnUpperRightCorner: Position, mowersDirectives: List[(Spati
       val endPosition = lawnMower.doMovements(m._2)
       LawnMowerResult(m._1, endPosition, m._2)
     })
-    val printer = new PrintOut()
+    val printer = new PrintCsv()
     printer.writeCsv(lawnMowerResults)(printer.lawnMowerResultCsvConverter)
+    println(json.parseLimit(lawn.width,lawn.length))
+    lawnMowerResults.foreach{ m =>
+      println(json.parseLawnMower(m.initPosition, m.movements, m.lastPosition))
+    }
+    println(json.parseEndJson())
   }
 }
