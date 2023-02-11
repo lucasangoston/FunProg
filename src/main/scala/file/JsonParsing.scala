@@ -2,7 +2,7 @@ package file
 
 import model.{Movement, SpatialPosition}
 
-class PrintJson {
+class JsonParsing {
 
   def parseLimit(x: Int, y: Int): String = {
     val originalString = "{\n\t\"limite\": {\n\t\t\"x\": ,\n\t\t\"y\": \n\t}, \n\t\"tondeuses\":[ "
@@ -26,19 +26,19 @@ class PrintJson {
 
     val parseValueBegin = originalStringBegin.replace("\"x\": ,", s"""\"x\": $initX,""")
                                           .replace("\"y\": ", s"""\"y\": $initY""")
-                                          .replace("\"direction\": ", s"""\"direction\": $initOrientation""")
-                                          .replace("\"instructions\": ,", s"""\"instructions\": $instructionToString,""")
+                                          .replace("\"direction\": ", s"""\"direction\": \"$initOrientation\"""")
+                                          .replace("\"instructions\": ,", s"""\"instructions\": \"$instructionToString\",""")
 
 
-    val originalStringEnd = "\"fin\": { \n\t\t\t\t\"point\": { \n\t\t\t\t\t\"x\": , \n\t\t\t\t\t\"y\":  \n\t\t\t\t }, \n\t\t\t\t\"direction\":  \n\t\t\t} \n\t\t},"
+    val originalStringEnd = "\"fin\": { \n\t\t\t\t\"point\": { \n\t\t\t\t\t\"x\": , \n\t\t\t\t\t\"y\":  \n\t\t\t\t }, \n\t\t\t\t\"direction\":  \n\t\t\t} \n\t\t}"
 
     val endX = endPosition.position.x.toString
     val endY = endPosition.position.y.toString
     val endOrientation = endPosition.cardinalPoint.toString
 
     val parseValueEnd = originalStringEnd.replaceFirst("\"x\": ,", s"""\"x\": $endX,""")
-                                  .replaceFirst("\"y\": ", s"""\"y\": $endY,""")
-                                  .replaceFirst("\"direction\": ", s"""\"direction\": $endOrientation""")
+                                  .replaceFirst("\"y\": ", s"""\"y\": $endY""")
+                                  .replaceFirst("\"direction\": ", s"""\"direction\": \"$endOrientation\"""")
 
     val parseValue = parseValueBegin + parseValueEnd
 

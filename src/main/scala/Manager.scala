@@ -1,10 +1,12 @@
 import Main.json
-import file.{PrintCsv}
+import file.{FileIO, PrintCsv}
 import model.{Lawn, LawnMower, LawnMowerResult, Movement, Position, SpatialPosition}
 
 case class Manager(lawnUpperRightCorner: Position, mowersDirectives: List[(SpatialPosition, List[Movement.Value])]) {
 
   val lawn = Lawn(lawnUpperRightCorner.x, lawnUpperRightCorner.y)
+  val file: FileIO = new FileIO()
+
 
   def execute(): Unit = {
     val lawnMowerResults = mowersDirectives.map({ m =>
@@ -13,11 +15,25 @@ case class Manager(lawnUpperRightCorner: Position, mowersDirectives: List[(Spati
       LawnMowerResult(m._1, endPosition, m._2)
     })
     val printer = new PrintCsv()
+
     printer.writeCsv(lawnMowerResults)(printer.lawnMowerResultCsvConverter)
-    println(json.parseLimit(lawn.width,lawn.length))
-    lawnMowerResults.foreach{ m =>
-      println(json.parseLawnMower(m.initPosition, m.movements, m.lastPosition))
+
+    createJson(lawnMowerResults)
+  }
+
+
+  private def createJson(lawnMowerResults: List[LawnMowerResult]): Unit = {
+    val configName = "application.output-json-file"
+    file.removeContentJson(configName)
+    file.writeContent(json.parseLimit(lawn.width, lawn.length), configName)
+    lawnMowerResults.zipWithIndex.foreach { case (m, index) =>
+      if (index == lawnMowerResults.size - 1) {
+        file.writeContent(json.parseLawnMower(m.initPosition, m.movements, m.lastPosition), configName)
+      } else {
+        file.writeContent(json.parseLawnMower(m.initPosition, m.movements, m.lastPosition), configName)
+        file.writeContent(",", configName)
+      }
     }
-    println(json.parseEndJson())
+    file.writeContent(json.parseEndJson(), configName)
   }
 }

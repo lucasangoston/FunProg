@@ -1,4 +1,4 @@
-5 5
+5 9
 1 2 N
 G A G A G A G A A
 3 3 E
